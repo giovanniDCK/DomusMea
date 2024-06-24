@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Automation Dashboard</title>
+  <style>
+    body { font-family: Arial, sans-serif; }
+    .sensor-data { margin: 10px 0; }
+  </style>
+</head>
+<body>
+  <h1>Home Automation Dashboard</h1>
+  <div id="dashboard">
+    <div class="sensor-data" id="humidity">Humidity: %</div>
+    <div class="sensor-data" id="temperature">Temperature: °C</div>
+    <div class="sensor-data" id="gas">Gas Level: </div>
+    <div class="sensor-data" id="light">Light Level: </div>
+    <div class="sensor-data" id="motion">Motion Detected: No</div>
+  </div>
+  <script>
+    async function fetchData() {
+      const response = await fetch('/data');
+      const data = await response.json();
+      document.getElementById('humidity').textContent = `Humidity: ${data.humidity}%`;
+      document.getElementById('temperature').textContent = `Temperature: ${data.temperature}°C`;
+      document.getElementById('gas').textContent = `Gas Level: ${data.gas}`;
+      document.getElementById('light').textContent = `Light Level: ${data.light}`;
+      document.getElementById('motion').textContent = `Motion Detected: ${data.motion ? 'Yes' : 'No'}`;
+    }
+
+    setInterval(fetchData, 2000);
+  </script>
+</body>
+</html>
